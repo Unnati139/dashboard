@@ -1,16 +1,17 @@
-
-import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
-import Widget1_Bar from './Widget1_Bar';
-import Widget2_Line from './Widget2_Line';
-import Widget3_PieDonut from './Widget3_PieDonut';
+import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+import Widget1_Bar from "./Widget1_Bar";
+import Widget2_Line from "./Widget2_Line";
+import Widget3_PieDonut from "./Widget3_PieDonut";
 //import Widget3_PieDonut from './Widget3_PieDonut';
-import Widget5_Area from './Widget5_Area';
+import Widget5_Area from "./Widget5_Area";
 
 const GraphsWidgets = () => {
   const location = useLocation();
+
   const values = location?.state?.formObjectValues;
-  console.log("values ",values)
+  const numRows = location?.state?.numRows;
+  const numColumns = location?.state?.numCols;
 
   const [result, setResult] = useState({
     followers: [],
@@ -28,12 +29,12 @@ const GraphsWidgets = () => {
   ];
 
   useEffect(() => {
-   
     const fetchData = async () => {
       try {
-        const response = await fetch("https://dummyapi.online/api/social-profiles");
+        const response = await fetch(
+          "https://dummyapi.online/api/social-profiles"
+        );
         const res = await response.json();
-
         const followers = [];
         const following = [];
         const labelName = [];
@@ -69,7 +70,7 @@ const GraphsWidgets = () => {
             type="bar"
             data={myData}
             width="100%"
-            height="400"
+            height="500"
             fsize="6"
             xaxisTitle="Profiles"
             yaxisTitle="Count"
@@ -84,7 +85,7 @@ const GraphsWidgets = () => {
             type="line"
             data={myData}
             width="100%"
-            height="400"
+            height="500"
             fsize="6"
             curve="smooth"
           />
@@ -99,7 +100,7 @@ const GraphsWidgets = () => {
             data={myData1}
             width="100%"
             height="500"
-            // dataLabelsEnabled
+          // dataLabelsEnabled
           />
         );
       case "w4":
@@ -112,8 +113,8 @@ const GraphsWidgets = () => {
             data={myData1}
             width="100%"
             height="500"
-            // dataLabelsEnabled
-          /> 
+          // dataLabelsEnabled
+          />
         );
       case "w5":
         return (
@@ -127,30 +128,61 @@ const GraphsWidgets = () => {
             height="500"
             // dataLabelsEnabled
             curve="smooth"
-            // stacked
+          // stacked
           />
         );
       default:
         return null;
     }
-    
   };
-
   return (
     <div className="container mt-4">
       <h3 className="mb-4">GraphsWidgets Dashboard</h3>
-      <div className="row">
-        {values.map((widgetType) => (
-          <div className="col-md-6 mb-4" key={widgetType}>
-            <div className="card">
-              <div className="card-body">
-                {renderWidget(widgetType)}
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-
+      {Array.from({ length: numRows }).map((_, rowIndex) => (
+        <div className="row" key={rowIndex}>
+          {Array.from({ length: numColumns }).map((_, colIndex) => {
+            let index = rowIndex * numColumns + colIndex;
+            if ((rowIndex === 0 || colIndex === 0) && values.length - 1 === numRows && numColumns === 2 ) {
+            if(rowIndex >=1 && rowIndex <= (values.length-2) ){ index = rowIndex + 1 ;}
+            // if (rowIndex === 1) { index = 2; }
+            // if (rowIndex === 2) { index = 3; }
+            // if (rowIndex === 3) { index = 4; }
+              const widgetType = values[index];
+              return (
+                <div
+                  className={`col-md-${12 / numColumns} mb-4`}
+                  key={widgetType}
+                >
+                  <div className="card">
+                    <div className="card-body" style={{ minHeight: "547px" }}>
+                      {renderWidget(widgetType)}
+                    </div>
+                  </div>
+                </div>
+              );
+            }
+            if (values.length - 1 !== numRows) {const widgetType = values[index];
+              if (widgetType !== undefined) {
+                return (
+                  <div
+                    className={12 % numColumns === 0 ? `col-md-${12 / numColumns} mb-4`: `col mb-4`}
+                    key={widgetType}
+                  >
+                    <div className="card">
+                      <div className="card-body" style={{ minHeight: "547px" }}>
+                        {renderWidget(widgetType)}
+                      </div>
+                    </div>
+                  </div>
+                );
+              }
+            } else {
+              console.log("else the last condition is executing");
+              return null; // Handle the case where there are not enough values for the specified rows and columns
+            }
+          })}
+        </div>
+      ))}
     </div>
   );
 };

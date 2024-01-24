@@ -9,7 +9,7 @@ const Dropdown = ({ onPageSelect, onChartSelect }) => {
 
   // Options for page
   const options1 = [
-    { id: "", value: "", label: "Select" },
+    // { id: "", value: "", label: "Select" },
     { id: "p1", value: "page 1", label: "Page 1" },
     { id: "p2", value: "page 2", label: "Page 2" },
     { id: "p3", value: "page 3", label: "Page 3" },
@@ -17,7 +17,7 @@ const Dropdown = ({ onPageSelect, onChartSelect }) => {
 
   // Options for charts
   const options2 = [
-    { id: "", value: "", label: "Select" },
+    // { id: "", value: "", label: "Select" },
     { id: "w1", value: "Bar", label: "Bar" },
     { id: "w2", value: "Line", label: "Line" },
     { id: "w3", value: "Area", label: "Area" },

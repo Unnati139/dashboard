@@ -19,7 +19,7 @@ const Widget5_Area = (id) => {
         tickPlacement="between",
         curve='smooth',
         stacked=false,
-        dataLabelsEnabled=false,
+        dataLabelsEnabled=true,
         ...other
       } = id;
 console.log("line 24",dataLabelsEnabled)

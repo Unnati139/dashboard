@@ -51,17 +51,17 @@ const Widget3_PieDonut = (id) => {
     fill: {
       type: 'gradient',
     },
-    responsive: [{
-      breakpoint: 480,
-      options: {
-        chart: {
-          width: 350
-        },
-        legend: {
-          position: 'bottom'
-        }
-      }
-    }],
+    // responsive: [{
+    //   breakpoint: 480,
+    //   options: {
+    //     chart: {
+    //       width: 350
+    //     },
+    //     legend: {
+    //       position: 'bottom'
+    //     }
+    //   }
+    // }],
     title: {
       text: title,
       style: { fontSize: fontSize },
