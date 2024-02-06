@@ -97,7 +97,6 @@ const DropdownNew = ({ retrieveMappedObject }) => {
         numCols: numCols,
       },
     });
-    
   };
   // console.log("mappedObject : ",mappedObject)
 
@@ -148,14 +147,13 @@ const DropdownNew = ({ retrieveMappedObject }) => {
                 Number of Rows:
               </label>
               <Select
-        
                 id="dropdownRows"
                 name="numRows"
                 options={generateRowOptions(obj.chartName.length)}
                 value={{ value: numRows, label: numRows.toString() }}
-                onChange={(selectedOption) =>
-                 { setNumCols("")
-                  setNumRows(selectedOption?.value || 1)
+                onChange={(selectedOption) => {
+                  setNumCols("");
+                  setNumRows(selectedOption?.value || 1);
                 }}
               />
             </div>
@@ -165,7 +163,6 @@ const DropdownNew = ({ retrieveMappedObject }) => {
                 Number of Columns:
               </label>
               <Select
-         
                 id="dropdownCols"
                 name="numCols"
                 options={generateColOptions(numRows, obj.chartName.length)}

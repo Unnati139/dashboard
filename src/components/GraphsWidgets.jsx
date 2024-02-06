@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import Widget1_Bar from "./Widget1_Bar";
-import Widget2_Line from "./Widget2_Line";
-import Widget3_PieDonut from "./Widget3_PieDonut";
-//import Widget3_PieDonut from './Widget3_PieDonut';
-import Widget5_Area from "./Widget5_Area";
+import Widget1 from "./Widget1";
 
 const GraphsWidgets = () => {
   const location = useLocation();
@@ -13,122 +9,174 @@ const GraphsWidgets = () => {
   const numRows = location?.state?.numRows;
   const numColumns = location?.state?.numCols;
 
-  const [result, setResult] = useState({
-    followers: [],
-    following: [],
-    labelName: [],
-  });
-
-  const myData = [
-    { name: "FollowersCount", data: result.followers },
-    { name: "FollowingCount", data: result.following },
-  ];
-  const myData1 = [
-    { name: "FollowersCount", data: result.followers },
-    // Add more datasets as needed
+  const series = [
+    {
+      name: "Average marks",
+      data: [480, 600, 800, 550, 750],
+    },
   ];
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(
-          "https://dummyapi.online/api/social-profiles"
-        );
-        const res = await response.json();
-        const followers = [];
-        const following = [];
-        const labelName = [];
+  const dummyCategories1 = ["A", "B", "C", "D", "E"];
 
-        for (const obj of res) {
-          followers.push(obj.followersCount);
-          following.push(obj.followingCount);
-          labelName.push(obj.fullName);
-        }
-
-        setResult((prev) => ({
-          ...prev,
-          followers: [...prev.followers, ...followers],
-          following: [...prev.following, ...following],
-          labelName: [...prev.labelName, ...labelName],
-        }));
-      } catch (error) {
-        console.log("error", error);
-      }
-    };
-
-    fetchData();
-  }, []);
+  const series2 = [
+    {
+      name: "Total Enrolled",
+      data: [
+        {
+          x: "Dec 23 2017",
+          y: null,
+        },
+        {
+          x: "Dec 24 2017",
+          y: 44,
+        },
+        {
+          x: "Dec 25 2017",
+          y: 31,
+        },
+        {
+          x: "Dec 26 2017",
+          y: 38,
+        },
+        {
+          x: "Dec 27 2017",
+          y: null,
+        },
+        {
+          x: "Dec 28 2017",
+          y: 32,
+        },
+        {
+          x: "Dec 29 2017",
+          y: 55,
+        },
+        {
+          x: "Dec 30 2017",
+          y: 51,
+        },
+        {
+          x: "Dec 31 2017",
+          y: 67,
+        },
+        {
+          x: "Jan 01 2018",
+          y: 22,
+        },
+        {
+          x: "Jan 02 2018",
+          y: 34,
+        },
+        {
+          x: "Jan 03 2018",
+          y: null,
+        },
+        {
+          x: "Jan 04 2018",
+          y: null,
+        },
+        {
+          x: "Jan 05 2018",
+          y: 11,
+        },
+        {
+          x: "Jan 06 2018",
+          y: 4,
+        },
+        {
+          x: "Jan 07 2018",
+          y: 15,
+        },
+        {
+          x: "Jan 08 2018",
+          y: null,
+        },
+        {
+          x: "Jan 09 2018",
+          y: 9,
+        },
+        {
+          x: "Jan 10 2018",
+          y: 34,
+        },
+        {
+          x: "Jan 11 2018",
+          y: null,
+        },
+        {
+          x: "Jan 12 2018",
+          y: null,
+        },
+        {
+          x: "Jan 13 2018",
+          y: 13,
+        },
+        {
+          x: "Jan 14 2018",
+          y: null,
+        },
+      ],
+    },
+  ];
 
   const renderWidget = (widgetType) => {
     switch (widgetType) {
       case "w1":
         return (
-          <Widget1_Bar
-            title="Bar Chart"
-            subtitle="Subtitle for Bar Chart"
-            labels={result.labelName}
-            type="bar"
-            data={myData}
-            width="100%"
-            height="500"
-            fsize="6"
-            xaxisTitle="Profiles"
-            yaxisTitle="Count"
+          <Widget1
+            labels={dummyCategories1}
+            chartType="bar"
+            data={series}
+            // horizontal={1}
+            // distributed={1}
+            // xaxisTitle="x-axis"
+            // yaxisTitle="y-axis"
+            // monochromaticEnabled={1}
+            //  strokeEnabled={0}
+            // zoomEnabled={1}
           />
         );
       case "w2":
         return (
-          <Widget2_Line
-            title="Line Chart"
-            subtitle="Subtitle for Line Chart"
-            labels={result.labelName}
-            type="line"
-            data={myData}
-            width="100%"
-            height="500"
-            fsize="6"
-            curve="smooth"
+          <Widget1
+            labels={dummyCategories1}
+            chartType="line"
+            data={series}
+            // monochromaticEnabled={1}
           />
         );
       case "w3":
         return (
-          <Widget3_PieDonut
-            title="Pie Chart"
-            subtitle="Subtitle for Pie Chart"
-            labels={result.labelName}
-            type="pie"
-            data={myData1}
-            width="100%"
-            height="500"
-          // dataLabelsEnabled
+          <Widget1
+            chartTitle="Pie Chart"
+            chartSubTitle="Subtitle for Pie Chart"
+            labels={dummyCategories1}
+            chartType="pie"
+            data={series}
+            strokeEnabled={0}
+            // monochromaticEnabled={1}
           />
         );
       case "w4":
         return (
-          <Widget3_PieDonut
-            title="Donut Chart"
-            subtitle="Subtitle for Donut Chart"
-            labels={result.labelName}
-            type="donut"
-            data={myData1}
-            width="100%"
-            height="500"
-          // dataLabelsEnabled
+          <Widget1
+            labels={dummyCategories1}
+            chartType="donut"
+            data={series}
+            // fillType="pattern"
+            // strokeEnabled={0}
+            // monochromaticEnabled={1}
           />
         );
       case "w5":
         return (
-          <Widget5_Area
-            title="Area Chart"
-            subtitle="Subtitle for Area Chart"
-            labels={result.labelName}
-            type="area"
-            data={myData}
-            width="100%"
-            height="500"
-            // dataLabelsEnabled
-            curve="smooth"
-          // stacked
+          <Widget1
+            // labels={dummyCategories}
+            chartType="area"
+            data={series2}
+            // xaxisType="datetime"
+            dataLabelsEnabled={0}
+            strokeCurve="straight"
+            // monochromaticEnabled={1}
           />
         );
       default:
@@ -142,11 +190,17 @@ const GraphsWidgets = () => {
         <div className="row" key={rowIndex}>
           {Array.from({ length: numColumns }).map((_, colIndex) => {
             let index = rowIndex * numColumns + colIndex;
-            if ((rowIndex === 0 || colIndex === 0) && values.length - 1 === numRows && numColumns === 2 ) {
-            if(rowIndex >=1 && rowIndex <= (values.length-2) ){ index = rowIndex + 1 ;}
-            // if (rowIndex === 1) { index = 2; }
-            // if (rowIndex === 2) { index = 3; }
-            // if (rowIndex === 3) { index = 4; }
+            if (
+              (rowIndex === 0 || colIndex === 0) &&
+              values.length - 1 === numRows &&
+              numColumns === 2
+            ) {
+              if (rowIndex >= 1 && rowIndex <= values.length - 2) {
+                index = rowIndex + 1;
+              }
+              // if (rowIndex === 1) { index = 2; }
+              // if (rowIndex === 2) { index = 3; }
+              // if (rowIndex === 3) { index = 4; }
               const widgetType = values[index];
               return (
                 <div
@@ -161,11 +215,16 @@ const GraphsWidgets = () => {
                 </div>
               );
             }
-            if (values.length - 1 !== numRows) {const widgetType = values[index];
+            if (values.length - 1 !== numRows) {
+              const widgetType = values[index];
               if (widgetType !== undefined) {
                 return (
                   <div
-                    className={12 % numColumns === 0 ? `col-md-${12 / numColumns} mb-4`: `col mb-4`}
+                    className={
+                      12 % numColumns === 0
+                        ? `col-md-${12 / numColumns} mb-4`
+                        : `col mb-4`
+                    }
                     key={widgetType}
                   >
                     <div className="card">
