@@ -1,8 +1,8 @@
+
 import React, { useState } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import GraphsWidgets from './components/GraphsWidgets';
-import DropdownNew from './components/DropdownNew';
-import BrushChart from './components/BrushChart';
+import Dropdown from './components/Dropdown';
 
 const App = () => {
   const [pageObj, setPageObj] = useState(null);
@@ -16,18 +16,13 @@ const App = () => {
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<DropdownNew retrieveMappedObject={mappedObjectApp} />} />
-          {pageObj && <Route
-              path={`/Widget/${pageObj}`}
-              element={<GraphsWidgets />}
-            />
-          }
+          <Route path="/" element={<Dropdown retrieveMappedObject={mappedObjectApp} />} />
+          {pageObj && <Route path={`/Widget/${pageObj}`} element={<GraphsWidgets />} /> }
+          
         </Routes>
       </BrowserRouter>
-      {/* <BrushChart/> */}
     </div>
   );
 };
 
 export default App;
-
